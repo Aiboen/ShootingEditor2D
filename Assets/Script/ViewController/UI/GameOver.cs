@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 namespace ShootingEditor2D
 {
-    public class UIGamePass : MonoBehaviour
+    public class UIGameOver : MonoBehaviour
     {
         private Lazy<GUIStyle> mLabelStyle = new Lazy<GUIStyle>(() => new GUIStyle(GUI.skin.label)
         {
@@ -25,18 +25,11 @@ namespace ShootingEditor2D
 
         private void OnGUI()
         {
-            var labelWidth = 400;
-            var labelHeight = 100;
-            var labelPosition = new Vector2(Screen.width - labelWidth, Screen.height - labelHeight) * 0.5f;
-            var labelSize = new Vector2(labelWidth, labelHeight);
-            var labelRect = new Rect(labelPosition, labelSize);
-            GUI.Label(labelRect, "游戏通关", mLabelStyle.Value);
+            var labelRect = RectHelper.RectForAnchorCenter(Screen.width * 0.5f, Screen.height * 0.5f, 400, 100);
 
-            var buttonWidth = 200;
-            var buttonHeight = 100;
-            var buttonPosition = new Vector2(Screen.width - buttonWidth, Screen.height - buttonHeight + 300) * 0.5f;
-            var buttonSize = new Vector2(buttonWidth, buttonHeight);
-            var buttonRect = new Rect(buttonPosition, buttonSize);
+            GUI.Label(labelRect, "游戏失败", mLabelStyle.Value);
+
+            var buttonRect = RectHelper.RectForAnchorCenter(Screen.width * 0.5f, Screen.height * 0.5f + 150, 200, 100);
 
             if (GUI.Button(buttonRect, "回到首页", mButtonStyle.Value))
             {
