@@ -1,4 +1,5 @@
 using FrameworkDesign;
+using UnityEngine;
 
 namespace ShootingEditor2D
 {
@@ -7,6 +8,13 @@ namespace ShootingEditor2D
         protected override void OnExecute()
         {
             this.GetSystem<IStatSystem>().KillCount.Value++;
+
+            //打中敌人随机概率获得随机个数子弹
+            var randomIndex = Random.Range(0, 100);
+            if (randomIndex < 80)
+            {
+                this.GetSystem<IGunSystem>().CurrentGun.BulletCount.Value += Random.Range(1, 4);
+            }
         }
     }
 }

@@ -42,6 +42,14 @@ namespace ShootingEditor2D
         {
             var horizontalMovement = Input.GetAxis("Horizontal");
 
+            //×ªÏò
+            if (horizontalMovement * transform.localScale.x < 0)
+            {
+                var localScale = transform.localScale;
+                localScale.x = -localScale.x;
+                transform.localScale = localScale;
+            }
+
             mRigidbody2D.velocity = new Vector2(horizontalMovement * moveSpeed, mRigidbody2D.velocity.y);
 
             var grounded = mGroundCheck.Triggered;
