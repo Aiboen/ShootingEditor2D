@@ -19,6 +19,6 @@ namespace ShootingEditor2D
 
         public BindableProperty<int> BulletCountOutGun;
 
-        public BindableProperty<GunState> State;
+        public BindableProperty<GunState> GunState;
     }
 }

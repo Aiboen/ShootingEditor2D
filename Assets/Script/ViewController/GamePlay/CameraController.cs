@@ -39,11 +39,11 @@ namespace ShootingEditor2D
 
             var smoothSpeed = 5;
 
-            // Ôö¼ÓÒ»¸öÆ½»¬´¦Àí
+            // å¢åŠ ä¸€ä¸ªå¹³æ»‘å¤„ç†
             var position = transform.position;
             position = Vector3.Lerp(position, new Vector3(TargetPos.x, TargetPos.y, position.z), smoothSpeed * Time.deltaTime);
 
-            // Ëø¶¨ÔÚÒ»¸ö¹Ì¶¨ÇøÓò
+            // é”å®šåœ¨ä¸€ä¸ªå›ºå®šåŒºåŸŸ
             transform.position = new Vector3(Mathf.Clamp(position.x, mMinX, mMaxX),
                 Mathf.Clamp(position.y, mMinY, mMaxY),
                 position.z);

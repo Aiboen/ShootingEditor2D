@@ -18,7 +18,7 @@ namespace ShootingEditor2D
         }
 
         /// <summary>
-        /// ×Ô¶¨Òå×ÖÌå´óĞ¡
+        /// è‡ªå®šä¹‰å­—ä½“å¤§å°
         /// </summary>
         private readonly Lazy<GUIStyle> mLabelStyle = new Lazy<GUIStyle>(() => new GUIStyle(GUI.skin.label)
         {
@@ -27,9 +27,12 @@ namespace ShootingEditor2D
 
         private void OnGUI()
         {
-            GUI.Label(new Rect(10, 10, 300, 100), $"ÉúÃü:{mPlayerModel.HP.Value}/3", mLabelStyle.Value);
-            GUI.Label(new Rect(10, 60, 300, 100), $"×Óµ¯:{mGunSystem.CurrentGun.BulletCountInGun.Value}", mLabelStyle.Value);
-            GUI.Label(new Rect(Screen.width - 10 - 300, 10, 300, 100), $"»÷É±ÊıÁ¿:{mStatSystem.KillCount.Value}", mLabelStyle.Value);
+            GUI.Label(new Rect(10, 10, 300, 100), $"ç”Ÿå‘½:{mPlayerModel.HP.Value}/3", mLabelStyle.Value);
+            GUI.Label(new Rect(10, 60, 300, 100), $"æªå†…å­å¼¹:{mGunSystem.CurrentGun.BulletCountInGun.Value}", mLabelStyle.Value); // -+
+            GUI.Label(new Rect(10, 110, 300, 100), $"æªå¤–å­å¼¹:{mGunSystem.CurrentGun.BulletCountOutGun.Value}", mLabelStyle.Value); // +
+            GUI.Label(new Rect(10, 160, 300, 100), $"æªæ¢°åå­—:{mGunSystem.CurrentGun.Name.Value}", mLabelStyle.Value); // +
+            GUI.Label(new Rect(10, 210, 300, 100), $"æªæ¢°çŠ¶æ€:{mGunSystem.CurrentGun.GunState.Value}", mLabelStyle.Value); // +
+            GUI.Label(new Rect(Screen.width - 10 - 300, 10, 300, 100), $"å‡»æ€æ•°é‡:{mStatSystem.KillCount.Value}", mLabelStyle.Value);
         }
 
         private void OnDestroy()

@@ -12,7 +12,9 @@ namespace FrameworkDesign
 
             set
             {
-                if (!mValue.Equals(value))
+                //Equals函数的调用者不能为空，引用类型默认值为空会引发空指针异常，导致System无法被注册
+                //解决方法使用值value调用 value.Equals(mValue)
+                if (!value.Equals(mValue))
                 {
                     mValue = value;
                     mOnValueChanged?.Invoke(value);
