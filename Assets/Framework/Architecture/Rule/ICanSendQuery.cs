@@ -6,7 +6,7 @@ namespace FrameworkDesign
 
     public static class CanSendQueryExtension
     {
-        public static T SendQuery<T>(this ICanSendQuery self, IQuery<T> query)
+        public static TResult SendQuery<TResult>(this ICanSendQuery self, IQuery<TResult> query)
         {
             return self.GetArchitecture().SendQuery(query);
         }

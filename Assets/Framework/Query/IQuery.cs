@@ -1,6 +1,6 @@
 namespace FrameworkDesign
 {
-    public interface IQuery<T> : IBelongToArchitecture, ICanSetArchitecture, ICanGetModle, ICanGetSystem, ICanGetUtility
+    public interface IQuery<T> : IBelongToArchitecture, ICanSetArchitecture, ICanGetModle, ICanGetSystem, ICanGetUtility, ICanSendQuery
     {
         T Do();
     }
