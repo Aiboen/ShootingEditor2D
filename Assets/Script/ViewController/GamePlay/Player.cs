@@ -1,19 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+
 namespace ShootingEditor2D
 {
     public class Player : MonoBehaviour
     {
         private Rigidbody2D mRigidbody2D;
         private Trigger2DCheck mGroundCheck;
+
+        /// <summary>
+        /// 枪械
+        /// </summary>
         private Gun mGun;
 
+        /// <summary>
+        /// 移动速度
+        /// </summary>
+        private const int moveSpeed = 5;
 
-        const int moveSpeed = 5;
-
+        /// <summary>
+        /// 人物跳跃检查
+        /// </summary>
         private bool mJumpPressed;
+
+        /// <summary>
+        /// 跳跃速度
+        /// </summary>
+        private readonly float mJumpSpeed = 5f;
+
         private void Awake()
         {
             mRigidbody2D = GetComponent<Rigidbody2D>();
@@ -42,7 +56,7 @@ namespace ShootingEditor2D
         {
             var horizontalMovement = Input.GetAxis("Horizontal");
 
-            //ת��
+            //转向
             if (horizontalMovement * transform.localScale.x < 0)
             {
                 var localScale = transform.localScale;
@@ -52,10 +66,11 @@ namespace ShootingEditor2D
 
             mRigidbody2D.velocity = new Vector2(horizontalMovement * moveSpeed, mRigidbody2D.velocity.y);
 
+            //跳跃
             var grounded = mGroundCheck.Triggered;
             if (mJumpPressed && grounded)
             {
-                mRigidbody2D.velocity = new Vector2(mRigidbody2D.velocity.x, 5);
+                mRigidbody2D.velocity = new Vector2(mRigidbody2D.velocity.x, mJumpSpeed);
             }
             mJumpPressed = false;
         }
