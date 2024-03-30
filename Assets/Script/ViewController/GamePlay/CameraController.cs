@@ -6,7 +6,6 @@ namespace ShootingEditor2D
     {
         private Transform mPlayerTrans;
 
-
         private Vector3 TargetPos;
 
         private float mMinX = -5;
@@ -42,8 +41,7 @@ namespace ShootingEditor2D
 
             // 增加一个平滑处理
             var position = transform.position;
-            position = Vector3.Lerp(position,
-                new Vector3(TargetPos.x, TargetPos.y, position.z), smoothSpeed * Time.deltaTime);
+            position = Vector3.Lerp(position, new Vector3(TargetPos.x, TargetPos.y, position.z), smoothSpeed * Time.deltaTime);
 
             // 锁定在一个固定区域
             transform.position = new Vector3(Mathf.Clamp(position.x, mMinX, mMaxX),

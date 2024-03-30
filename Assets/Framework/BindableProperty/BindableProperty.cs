@@ -1,12 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace FrameworkDesign
 {
-    public class BindableProperty<T> where T : IEquatable<T>
+    public class BindableProperty<T>
     {
         private T mValue;
 
@@ -23,7 +19,6 @@ namespace FrameworkDesign
                 }
             }
         }
-
 
         private Action<T> mOnValueChanged = (v) => { };
 
@@ -43,7 +38,7 @@ namespace FrameworkDesign
         }
     }
 
-    public class BindablePropertyUnRegister<T> : IUnRegister where T : IEquatable<T> // +
+    public class BindablePropertyUnRegister<T> : IUnRegister
     {
         public BindableProperty<T> BindableProperty { get; set; }
 

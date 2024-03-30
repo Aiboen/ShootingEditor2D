@@ -1,5 +1,6 @@
 using FrameworkDesign;
 using UnityEngine;
+
 namespace ShootingEditor2D
 {
     public class Gun : MonoBehaviour, IController
@@ -16,7 +17,7 @@ namespace ShootingEditor2D
 
         public void Shoot()
         {
-            if (mGunInfo.BulletCount.Value > 0)
+            if (mGunInfo.BulletCountInGun.Value > 0)
             {
                 var bullet = Instantiate(mBullet, mBullet.transform.position, mBullet.transform.rotation);
                 bullet.transform.localScale = mBullet.transform.lossyScale;
@@ -24,7 +25,6 @@ namespace ShootingEditor2D
 
                 this.SendCommand(ShootCommand.Single);
             }
-
         }
 
         IArchitecture IBelongToArchitecture.GetArchitecture()
