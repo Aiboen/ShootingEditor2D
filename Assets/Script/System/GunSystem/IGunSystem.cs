@@ -18,16 +18,16 @@ namespace ShootingEditor2D
             {
                 Value = 3
             },
-            BulletCountOutGun = new BindableProperty<int>() // +
+            BulletCountOutGun = new BindableProperty<int>()
             {
                 Value = 1
             },
-            Name = new BindableProperty<string>() // +
+            Name = new BindableProperty<string>()
             {
-                //Value = "手枪"
+                Value = "手枪"
             },
 
-            GunState = new BindableProperty<GunState>() // +
+            GunState = new BindableProperty<GunState>()
             {
                 Value = GunState.Idle
             }

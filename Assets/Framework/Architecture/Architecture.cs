@@ -1,82 +1,88 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
+
 namespace FrameworkDesign
 {
-
     public interface IArchitecture
     {
-
         /// <summary>
-        /// ×¢²á System
+        /// æ³¨å†Œ System
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
         void RegisterSystem<T>(T instance) where T : ISystem;
 
         /// <summary>
-        /// ×¢²áModel
+        /// æ³¨å†ŒModel
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
         void RegisterModel<T>(T instance) where T : IModel;
 
         /// <summary>
-        /// ×¢²á Utility
+        /// æ³¨å†Œ Utility
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
         void RegisterUtility<T>(T instance) where T : IUtility;
 
         /// <summary>
-        /// »ñµÃ Model
+        /// è·å¾— Model
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         T GetModel<T>() where T : class, IModel;
 
         /// <summary>
-        /// »ñµÃSystem
+        /// è·å¾—System
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         T GetSystem<T>() where T : class, ISystem;
 
         /// <summary>
-        /// »ñÈ¡¹¤¾ß
+        /// è·å–å·¥å…·
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         T GetUtiliy<T>() where T : class, IUtility;
+
         /// <summary>
-        /// ·¢ËÍÃüÁî
+        /// å‘é€å‘½ä»¤
         /// </summary>
         /// <typeparam name="T"></typeparam>
         void SendCommand<T>() where T : ICommand, new();
+
         /// <summary>
-        /// ·¢ËÍÃüÁî
+        /// å‘é€å‘½ä»¤
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="command"></param>
         void SendCommand<T>(T command) where T : ICommand;
 
         /// <summary>
-        /// ·¢ËÍÊÂ¼ş
+        /// å‘é€æŸ¥è¯¢
+        /// </summary>
+        /// <typeparam name="TResult"></typeparam>
+        /// <param name="query"></param>
+        /// <returns></returns>
+        TResult SendQuery<TResult>(IQuery<TResult> query);
+
+        /// <summary>
+        /// å‘é€äº‹ä»¶
         /// </summary>
         /// <typeparam name="T"></typeparam>
         void SendEvent<T>() where T : new();
 
         /// <summary>
-        /// ·¢ËÍÊÂ¼ş
+        /// å‘é€äº‹ä»¶
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="e"></param>
         void SendEvent<T>(T e);
 
         /// <summary>
-        /// ×¢²áÊÂ¼ş
+        /// æ³¨å†Œäº‹ä»¶
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="onEvent"></param>
@@ -84,7 +90,7 @@ namespace FrameworkDesign
         IUnRegister RegisetrEvent<T>(Action<T> onEvent);
 
         /// <summary>
-        /// ×¢ÏúÊÂ¼ş
+        /// æ³¨é”€äº‹ä»¶
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="onEvent"></param>
@@ -92,20 +98,22 @@ namespace FrameworkDesign
     }
 
     /// <summary>
-    /// ¼Ü¹¹
+    /// æ¶æ„
     /// </summary>
     public abstract class Architecture<T> : IArchitecture where T : Architecture<T>, new()
     {
         /// <summary>
-        /// ÊÇ·ñÒÑ¾­³õÊ¼»¯Íê³É
+        /// æ˜¯å¦å·²ç»åˆå§‹åŒ–å®Œæˆ
         /// </summary>
         private bool mInited = false;
+
         /// <summary>
-        /// ÓÃÓÚ³õÊ¼»¯SystemµÄ»º´æ
+        /// ç”¨äºåˆå§‹åŒ–Systemçš„ç¼“å­˜
         /// </summary>
         private List<ISystem> mSystem = new List<ISystem>();
+
         /// <summary>
-        /// ÓÃÓÚ³õÊ¼»¯ModelµÄ»º´æ
+        /// ç”¨äºåˆå§‹åŒ–Modelçš„ç¼“å­˜
         /// </summary>
         private List<IModel> mModels = new List<IModel>();
 
@@ -113,11 +121,10 @@ namespace FrameworkDesign
 
         protected abstract void Init();
 
+        #region ç±»ä¼¼å•ä¾‹æ¨¡å¼ ä½†æ˜¯ä»…åœ¨å†…éƒ¨è®¿é—®
 
-
-        #region ÀàËÆµ¥ÀıÄ£Ê½ µ«ÊÇ½öÔÚÄÚ²¿·ÃÎÊ
         /// <summary>
-        /// Ôö¼Ó×¢²á
+        /// å¢åŠ æ³¨å†Œ
         /// </summary>
         public static Action<T> OnRegisterPatch = architecture => { };
 
@@ -135,8 +142,8 @@ namespace FrameworkDesign
             }
         }
 
-        //È·±£ Container ÊÇÓĞÊµÀıµÄ
-        static void MakeSureArchitecture()
+        //ç¡®ä¿ Container æ˜¯æœ‰å®ä¾‹çš„
+        private static void MakeSureArchitecture()
         {
             if (mArchitecture == null)
             {
@@ -145,35 +152,37 @@ namespace FrameworkDesign
 
                 OnRegisterPatch?.Invoke(mArchitecture);
 
-                //³õÊ¼»¯model
+                //åˆå§‹åŒ–model
                 foreach (var architectureModel in mArchitecture.mModels)
                 {
                     architectureModel.Init();
                 }
-                //Çå¿ÕModel
+                //æ¸…ç©ºModel
                 mArchitecture.mModels.Clear();
 
                 foreach (var architectureSystem in mArchitecture.mSystem)
                 {
                     architectureSystem.Init();
                 }
-                //Çå¿ÕSystem
+                //æ¸…ç©ºSystem
                 mArchitecture.mSystem.Clear();
 
                 mArchitecture.mInited = true;
             }
         }
-        #endregion
 
-        #region ×¢²á
+        #endregion ç±»ä¼¼å•ä¾‹æ¨¡å¼ ä½†æ˜¯ä»…åœ¨å†…éƒ¨è®¿é—®
+
+        #region æ³¨å†Œ
+
         /// <summary>
-        /// ×¢²áSystem
+        /// æ³¨å†ŒSystem
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
         public void RegisterSystem<T>(T instance) where T : ISystem
         {
-            //¸³Öµ
+            //èµ‹å€¼
             instance.SetArchitecture(this);
 
             mContainer.Register<T>(instance);
@@ -187,14 +196,15 @@ namespace FrameworkDesign
                 mSystem.Add(instance);
             }
         }
+
         /// <summary>
-        /// ×¢²áModel
+        /// æ³¨å†ŒModel
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
         public void RegisterModel<T>(T instance) where T : IModel
         {
-            //ĞèÒª¸ømodel¸³ÖµÒ»ÏÂ
+            //éœ€è¦ç»™modelèµ‹å€¼ä¸€ä¸‹
             instance.SetArchitecture(this);
 
             mContainer.Register<T>(instance);
@@ -208,8 +218,9 @@ namespace FrameworkDesign
                 mModels.Add(instance);
             }
         }
+
         /// <summary>
-        /// ×¢²áUtility
+        /// æ³¨å†ŒUtility
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="instance"></param>
@@ -218,9 +229,10 @@ namespace FrameworkDesign
             mContainer.Register<T>(instance);
         }
 
-        #endregion
+        #endregion æ³¨å†Œ
 
-        #region »ñÈ¡
+        #region è·å–
+
         public T GetModel<T>() where T : class, IModel
         {
             return mContainer.Get<T>();
@@ -236,9 +248,9 @@ namespace FrameworkDesign
             return mContainer.Get<T>();
         }
 
-        #endregion
+        #endregion è·å–
 
-        #region ·¢ËÍ
+        #region å‘é€
 
         public void SendCommand<T>() where T : ICommand, new()
         {
@@ -253,10 +265,18 @@ namespace FrameworkDesign
             command.Execute();
         }
 
-        #endregion
+        public TResult SendQuery<TResult>(IQuery<TResult> query)
+        {
+            query.SetArchitecture(this);
+            return query.Do();
+        }
 
-        #region ÊÂ¼ş
+        #endregion å‘é€
+
+        #region äº‹ä»¶
+
         private ITypeEventSystem mTypeEventSystem = new TypeEventSystem();
+
         public void SendEvent<T>() where T : new()
         {
             mTypeEventSystem.Send<T>();
@@ -276,6 +296,7 @@ namespace FrameworkDesign
         {
             mTypeEventSystem.UnRegister<T>(onEvent);
         }
-        #endregion
+
+        #endregion äº‹ä»¶
     }
 }
