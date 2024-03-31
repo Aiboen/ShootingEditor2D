@@ -22,6 +22,12 @@ namespace ShootingEditor2D
             timeSystem.AddDelayTask(1 / gunConfigItem.Frequency, () =>
             {
                 gunSystem.CurrentGun.GunState.Value = GunState.Idle;
+
+                //自动换弹
+                if (gunSystem.CurrentGun.BulletCountInGun.Value <= 0)
+                {
+                    this.SendCommand<ReloadCommand>();
+                }
             });
         }
     }

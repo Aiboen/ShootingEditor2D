@@ -9,10 +9,14 @@ namespace ShootingEditor2D
 
         private GunInfo mGunInfo;
 
+        private int mMaxBulletCount;
+
         private void Awake()
         {
             mBullet = transform.Find("Bullet").gameObject;
             mGunInfo = this.GetSystem<IGunSystem>().CurrentGun;
+
+            mMaxBulletCount = this.SendQuery(new MaxBulletCountQuery(mGunInfo.Name.Value));
         }
 
         /// <summary>
@@ -28,6 +32,15 @@ namespace ShootingEditor2D
                 //发送开枪命令
                 this.SendCommand(ShootCommand.Single);
             }
+        }
+
+        /// <summary>
+        /// 换弹
+        /// </summary>
+        public void Reload()
+        {
+            if (mGunInfo.GunState.Value == GunState.Idle)
+                this.SendCommand<ReloadCommand>();
         }
 
         IArchitecture IBelongToArchitecture.GetArchitecture()

@@ -20,6 +20,11 @@ namespace ShootingEditor2D
 
             //查询代码
             mMaxBulletCount = this.SendQuery<int>(new MaxBulletCountQuery(mGunSystem.CurrentGun.Name.Value));
+            //注册事件
+            this.RegisterEvent<OnCurrentGunChanged>(e =>
+            {
+                mMaxBulletCount = this.SendQuery(new MaxBulletCountQuery(e.Name));
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
         /// <summary>

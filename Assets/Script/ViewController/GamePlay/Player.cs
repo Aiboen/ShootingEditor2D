@@ -1,9 +1,10 @@
+using FrameworkDesign;
 using Unity.VisualScripting;
 using UnityEngine;
 
 namespace ShootingEditor2D
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IController
     {
         private Rigidbody2D mRigidbody2D;
         private Trigger2DCheck mGroundCheck;
@@ -42,13 +43,20 @@ namespace ShootingEditor2D
 
         private void Update()
         {
+            //空格跳跃
             if (Input.GetKeyDown(KeyCode.Space))
-            {
                 mJumpPressed = true;
-            }
-            if (Input.GetKeyDown(KeyCode.J))
-            {
+            //鼠标左键开枪
+            if (Input.GetMouseButtonDown(0))
                 mGun.Shoot();
+            //R键换弹
+            if (Input.GetKeyDown(KeyCode.R))
+                mGun.Reload();
+            //Q键换枪
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                Debug.Log("换枪键按下");
+                this.SendCommand(new ShiftGunCommand());
             }
         }
 
@@ -73,6 +81,11 @@ namespace ShootingEditor2D
                 mRigidbody2D.velocity = new Vector2(mRigidbody2D.velocity.x, mJumpSpeed);
             }
             mJumpPressed = false;
+        }
+
+        IArchitecture IBelongToArchitecture.GetArchitecture()
+        {
+            return ShootingEditor2D.Interface;
         }
     }
 }
