@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ShootingEditor2D
 {
-    public class Gun : MonoBehaviour, IController
+    public class Gun : ShootingEditor2DController
     {
         private GameObject mBullet;
 
@@ -41,11 +41,6 @@ namespace ShootingEditor2D
         {
             if (mGunInfo.GunState.Value == GunState.Idle)
                 this.SendCommand<ReloadCommand>();
-        }
-
-        IArchitecture IBelongToArchitecture.GetArchitecture()
-        {
-            return ShootingEditor2D.Interface;
         }
 
         private void OnDestroy()

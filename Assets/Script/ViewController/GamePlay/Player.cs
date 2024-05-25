@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ShootingEditor2D
 {
-    public class Player : MonoBehaviour, IController
+    public class Player : ShootingEditor2DController
     {
         private Rigidbody2D mRigidbody2D;
         private Trigger2DCheck mGroundCheck;
@@ -81,11 +81,6 @@ namespace ShootingEditor2D
                 mRigidbody2D.velocity = new Vector2(mRigidbody2D.velocity.x, mJumpSpeed);
             }
             mJumpPressed = false;
-        }
-
-        IArchitecture IBelongToArchitecture.GetArchitecture()
-        {
-            return ShootingEditor2D.Interface;
         }
     }
 }

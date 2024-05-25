@@ -12,6 +12,11 @@ namespace ShootingEditor2D
         GunInfo CurrentGun { get; }
 
         /// <summary>
+        /// 枪支队列
+        /// </summary>
+        Queue<GunInfo> GunInfos { get; }
+
+        /// <summary>
         /// 捡枪
         /// </summary>
         /// <param name="name"></param>
@@ -31,6 +36,8 @@ namespace ShootingEditor2D
         /// 拥有枪支队列
         /// </summary>
         private Queue<GunInfo> mGunInfos = new Queue<GunInfo>();
+
+        public Queue<GunInfo> GunInfos { get => mGunInfos; }
 
         public override void OnInit()
         {

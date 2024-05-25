@@ -1,10 +1,9 @@
 using FrameworkDesign;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
 namespace ShootingEditor2D
 {
-    public class Bullet : MonoBehaviour, IController
+    public class Bullet : ShootingEditor2DController
     {
         private Rigidbody2D mRigidbody;
         private float moveSpeed = 10f;
@@ -21,12 +20,10 @@ namespace ShootingEditor2D
             var isRight = Mathf.Sign(transform.localScale.x);
 
             mRigidbody.velocity = Vector2.right * moveSpeed * isRight;
-
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-
             if (other.gameObject.CompareTag("Enemy"))
             {
                 this.SendCommand<KillEnemyCommand>();
@@ -34,13 +31,6 @@ namespace ShootingEditor2D
 
                 Destroy(gameObject);
             }
-        }
-
-
-
-        public IArchitecture GetArchitecture()
-        {
-            return ShootingEditor2D.Interface;
         }
     }
 }
